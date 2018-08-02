@@ -40,6 +40,7 @@ target_link_libraries(
 install(TARGETS 
 	async_test async
 	RUNTIME DESTINATION bin
+	LIBRARY DESTINATION lib
 )
 
 set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
