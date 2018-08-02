@@ -34,8 +34,12 @@ set_target_properties(
 
 target_link_libraries(
     async_test
-    async
     -pthread
+)
+
+target_link_libraries(
+    async_test
+    async
 )
 
 install(TARGETS 
