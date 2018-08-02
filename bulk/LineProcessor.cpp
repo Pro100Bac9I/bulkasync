@@ -13,14 +13,20 @@ LineProcessor::LineProcessor(int i_len)
   d_block->subscribe(std::make_unique<LogObserver>());
 }
 
+LineProcessor::~LineProcessor()
+{
+  if (d_tail.size())
+    processLine(d_tail);
+
+  d_block->setStatus(Status::endBlock);
+}
+
 void LineProcessor::run()
 {
   std::string line;
 
   while (std::getline(std::cin, line))
     processLine(line);
-
-  d_block->setStatus(Status::endBlock);
 }
 
 void LineProcessor::processLine(const std::string &line)
@@ -39,5 +45,19 @@ void LineProcessor::processLine(const std::string &line)
   }
   else
     d_block->append(line);
+}
+
+void LineProcessor::processLine(const char* i_data, size_t i_size)
+{
+  for (size_t index = 0; index < i_size; ++index)
+  {
+    if (i_data[index] != '\n')
+      d_tail.push_back(i_data[index]);
+    else
+    {
+      processLine(d_tail);
+      d_tail.clear();
+    }
+  }
 }
 
