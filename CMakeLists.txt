@@ -29,6 +29,7 @@ set_target_properties(
     CXX_STANDARD 14
     CXX_STANDARD_REQUIRED ON
     COMPILE_OPTIONS -Wpedantic -Wall -Wextra
+    COMPILE_FLAGS -fPIC
 )
 
 target_link_libraries(
