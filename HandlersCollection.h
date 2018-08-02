@@ -23,7 +23,7 @@ protected:
   HandlerCollection(const HandlerCollection &i_other) = delete;
   HandlerCollection& operator=(const HandlerCollection &i_other) = delete;
 private:
-  std::unordered_map<int, std::unique_ptr<LineProcessor>> d_handlers;
+  std::unordered_map<long, std::unique_ptr<LineProcessor>> d_handlers;
   std::mutex d_mutex;
-  int d_counter = 0;
+  long d_counter = 0;
 };
