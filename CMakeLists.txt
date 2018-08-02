@@ -6,14 +6,24 @@ else()
     set(VERSION_BUILD 0)
 endif()
 
-project(bulk VERSION 0.0.${VERSION_BUILD})
+project(async VERSION 0.0.${VERSION_BUILD})
 
 add_subdirectory(bulk)
 
-add_executable(bulk bulk.cpp)
+add_library(async 
+
+	SHARED
+	async.cpp
+	HandlersCollection.cpp
+)
+
+target_link_libraries(async bulk_lib)
+
+add_executable(async_test main.cpp)
 
 set_target_properties(
-    bulk
+    async
+    async_test
 
     PROPERTIES
     CXX_STANDARD 14
@@ -22,11 +32,15 @@ set_target_properties(
 )
 
 target_link_libraries(
-    bulk
-    bulk_lib
+    async_test
+    async
+    -pthread
 )
 
-install(TARGETS bulk RUNTIME DESTINATION bin)
+install(TARGETS 
+	async_test async
+	RUNTIME DESTINATION bin
+)
 
 set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
 set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
